@@ -21,4 +21,72 @@ command interpreter is exactly the same with the Shell but limited to a specific
 * Update attributes of an object
 * Destroy an object
 
+### how to start it
 
+Installing
+You will need to clone the repository of the project from Github. This will contain the simple shell program and all of its dependencies.
+
+git clone https://github.com/amel83/AirBnB_clone.git
+After cloning the repository you will have a folder called AirBnB_clone. In here there will be several files that allow the program to work.
+
+/console.py : The main executable of the project, the command interpreter.
+
+models/engine/file_storage.py: Class that serializes instances to a JSON file and deserializes JSON file to instances
+
+models/__ init __.py: A unique FileStorage instance for the application
+
+models/base_model.py: Class that defines all common attributes/methods for other classes.
+
+models/user.py: User class that inherits from BaseModel
+
+models/state.py: State class that inherits from BaseModel
+
+models/city.py: City class that inherits from BaseModel
+
+models/amenity.py: Amenity class that inherits from BaseModel
+
+models/place.py: Place class that inherits from BaseModel
+
+models/review.py: Review class that inherits from BaseModel
+
+### how to use it
+
+It can work in two different modes:
+
+It should work like this in interactive mode:
+'''
+$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb) 
+(hbnb) 
+(hbnb) quit
+$
+'''
+But also in non-interactive mode: (like the Shell project in C)
+'''
+$ echo "help" | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+'''
+All tests should also pass in non-interactive mode: $ echo "python3 -m unittest discover tests" | bash
