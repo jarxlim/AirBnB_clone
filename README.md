@@ -90,3 +90,14 @@ EOF  help  quit
 $
 ```
 All tests should also pass in non-interactive mode: $ echo "python3 -m unittest discover tests" | bash
+
+### Example:
+
+quit or EOF : Exits the program
+help : Provides a text describing how to use a command.
+create : Creates a new instance of a valid Class, saves it (to the JSON file) and prints the id. Valid classes are: BaseModel, User, State, City, Amenity, Place, Review.
+show : Prints the string representation of an instance based on the class name and id
+destroy : Deletes an instance based on the class name and id (saves the change into a JSON file).
+all : Prints all string representation of all instances based or not on the class name.
+update : Updates an instance based on the class name and id by adding or updating attribute (saves the changes into a JSON file).
+count : Retrieve the number of instances of a class.
