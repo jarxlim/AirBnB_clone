@@ -21,8 +21,8 @@ class BaseModel():
                 if k in ['create_at, updated_at']:
                     self.__dict__[k] = datetime.strptime(v, '%y-%m-%dT%H:&M:%S.%f')
                 else:
-                    self.__dict__[k] = v
-        
+                    self.__dict__[k] = v    
+    
     def __str__(self):
         """string representation of attribute
 
