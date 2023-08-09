@@ -38,6 +38,6 @@ class FileStorage:
                 for key in seri_obj.values():
                     class_name = key["__class__"]
                     del key["__class__"]
-                    self.new(eval(cls_name)(**key))
+                    self.new(eval(class_name)(**key))
         except FileNotFoundError:
             return

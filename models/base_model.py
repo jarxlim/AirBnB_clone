@@ -18,7 +18,7 @@ class BaseModel():
         self.updated_at = datetime.now()
         if len(kwargs) != 0:
             for k, v in kwargs.items():
-                if k in ['create_at, updated_at']:
+                if k in ['created_at, updated_at']:
                     self.__dict__[k] = datetime.strptime(v, '%y-%m-%dT%H:&M:%S.%f')
                 else:
                     self.__dict__[k] = v
