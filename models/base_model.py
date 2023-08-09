@@ -8,13 +8,19 @@ from datetime import datetime
 class BaseModel():
     """class base model
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """init: instantiation
         """
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k in ['create_at, updated_at']:
+                    self.__dict__[k] = datetime.strptime(v, '%y-%m-%dT%H:&M:%S.%f')
+                else:
+                    self.__dict__[k] = v
+        
     def __str__(self):
         """string representation of attribute
 
