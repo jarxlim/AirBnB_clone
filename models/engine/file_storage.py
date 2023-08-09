@@ -36,8 +36,8 @@ class FileStorage:
             with open(FileStorage.__file_path) as fl:
                 seri_obj = json.load(fl)
                 for key in seri_obj.values():
-                    class_name = key["__class__"]
+                    cls_name = key["__class__"]
                     del key["__class__"]
-                    self.new(eval(class_name)(**key))
+                    self.new(eval(cls_name)(**key))
         except FileNotFoundError:
             return
