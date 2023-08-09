@@ -7,9 +7,9 @@ class HBNBCommand(cmd.Cmd):
     """cmd class to command line interprete"""
     prompt = '(hbnb) '
 
-    def do_EOF(self):
+    def do_EOF(self, arg):
         """handles end of file"""
-        print ("")
+        print ()
         return True
    
     def emptyline(self):
