@@ -2,7 +2,7 @@
 """_the main class basemodel"""
 
 import uuid
-import cmd
+import models
 from datetime import datetime
 
 class BaseModel():
@@ -20,7 +20,9 @@ class BaseModel():
                     self.__dict__[k] = datetime.strptime(v, '%y-%m-%dT%H:&M:%S.%f')
                 else:
                     self.__dict__[k] = v
-        
+        else:
+            models.storage.new(self)
+
     def __str__(self):
         """string representation of attribute
 
@@ -33,6 +35,7 @@ class BaseModel():
         """to update the current time
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """dic reprsentation

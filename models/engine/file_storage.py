@@ -17,25 +17,27 @@ class FileStorage:
 
     def all(self):
         """return all the dictionary objects"""
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        Filestorage.__objects[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        seri_obj = {key: FileStorage.__objects[key].to_dict() for key, obj in FileStorage.__objects.items()}
-        with open(FileStorage.__file_path, 'w') as file:
-            json.dump(seri_obj, file)
+        seri_obj = {obj: FileStorage.__objects[obj].to_dict() for obj in FileStorage.__objects.keys()}
+        with open(FileStorage.__file_path, 'w') as fl:
+            json.dump(seri_obj, fl)
 
     def reload(self):
         """deserializes the JSON file to __objects (only if the JSON FILE)"""
-        if exists(FileStorage.__file_path):
-            with open(FileStorage.__file_path, 'r') as file:
-                objects_dict = json.load(file)
-                for key, obj_dict in objects_dict.items():
-                    class_name = obj_dict['__class__']
-                    obj = eval(class_name)(**obj_dict)
-                    self.__objects[key] = obj
+        try:
+            with open(FileStorage.__file_path) as fl:
+                seri_obj = json.load(fl)
+                for key in seri_obj.values():
+                    class_name = key["__class__"]
+                    del key["__class__"]
+                    self.new(eval(cls_name)(**key))
+        except FileNotFoundError:
+            return
