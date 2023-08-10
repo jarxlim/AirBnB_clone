@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """Represent a city.
+    """class represent a city.
 
     Attributes:
         state_id (str): state id.

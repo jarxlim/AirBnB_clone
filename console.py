@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
     
     def do_EOF(self, arg):
         """handles end of file"""
-        print ()
+        print()
         return True
    
     def emptyline(self):
@@ -37,10 +37,6 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, arg):
         """Quit command to exit the program."""
         return True
-
-    def emptyline(self):
-        """Do nothing on empty line"""
-        pass
 
     def do_create(self, arg):
         """Create a new instance of BaseModel, and print the id"""
