@@ -48,7 +48,16 @@ class HBNBCommand(cmd.Cmd):
         "Amenity",
         "Review"
     }
+<<<<<<< HEAD
 
+=======
+    
+    def do_EOF(self, arg):
+        """handles end of file"""
+        print()
+        return True
+   
+>>>>>>> d4ea93dd26927fa25d6008d1ee2134134b6d53c0
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
         pass
@@ -78,11 +87,14 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program."""
         return True
 
+<<<<<<< HEAD
     def do_EOF(self, arg):
         """EOF signal to exit the program."""
         print("")
         return True
 
+=======
+>>>>>>> d4ea93dd26927fa25d6008d1ee2134134b6d53c0
     def do_create(self, arg):
         """Usage: create <class>
         Create a new class instance and print its id.
