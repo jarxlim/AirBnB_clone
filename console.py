@@ -11,22 +11,26 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
-def parse(arg):
-    curly_braces = re.search(r"\{(.*?)\}", arg)
-    brackets = re.search(r"\[(.*?)\]", arg)
-    if curly_braces is None:
-        if brackets is None:
-            return [i.strip(",") for i in split(arg)]
+
+def parsing(input_str):
+    curly_bracket_match = re.search(r"\{(.*?)\}", input_str)
+    square_bracket_match = re.search(r"\[(.*?)\]", input_str)
+
+    if curly_bracket_match is None:
+        if square_bracket_match is None:
+            segments = [segment.strip(",") for segment in input_str.split()]
         else:
-            lexer = split(arg[:brackets.span()[0]])
-            retl = [i.strip(",") for i in lexer]
-            retl.append(brackets.group())
-            return retl
+            left_segments = input_str[:square_bracket_match.span()[0]].split()
+            right_segments = [segment.strip(",") for segment in left_segments]
+            right_segments.append(square_bracket_match.group())
+            segments = right_segments
     else:
-        lexer = split(arg[:curly_braces.span()[0]])
-        retl = [i.strip(",") for i in lexer]
-        retl.append(curly_braces.group())
-        return retl
+        left_segments = input_str[:curly_bracket_match.span()[0]].split()
+        right_segments = [segment.strip(",") for segment in left_segments]
+        right_segments.append(curly_bracket_match.group())
+        segments = right_segments
+
+    return segments
 
 
 class HBNBCommand(cmd.Cmd):
@@ -41,25 +45,26 @@ class HBNBCommand(cmd.Cmd):
         "Review"
     }
 
-    def default(self, arg):
+    def default(self, input_arg):
         """Default behavior for cmd module when input is invalid"""
-        argdict = {
+        command_dict = {
             "all": self.do_all,
             "show": self.do_show,
             "destroy": self.do_destroy,
             "count": self.do_count,
             "update": self.do_update
         }
-        match = re.search(r"\.", arg)
-        if match is not None:
-            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
-            match = re.search(r"\((.*?)\)", argl[1])
-            if match is not None:
-                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
-                if command[0] in argdict.keys():
-                    call = "{} {}".format(argl[0], command[1])
-                    return argdict[command[0]](call)
-        print("*** Unknown syntax: {}".format(arg))
+        
+        dot_match = re.search(r"\.", input_arg)
+        if dot_match is not None:
+            input_arg_list = [input_arg[:dot_match.span()[0]], input_arg[dot_match.span()[1]:]]
+            parentheses_match = re.search(r"\((.*?)\)", input_arg_list[1])
+            if parentheses_match is not None:
+                command_parts = [input_arg_list[1][:parentheses_match.span()[0]], parentheses_match.group()[1:-1]]
+                if command_parts[0] in command_dict.keys():
+                    full_call = "{} {}".format(input_arg_list[0], command_parts[1])
+                    return command_dict[command_parts[0]](full_call)
+        print("*** Unknown syntax: {}".format(input_arg))
         return False
 
     def do_quit(self, arg):
@@ -77,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Create a new instance of BaseModel, save it, and print the id"""
-        args = parse(arg)
+        args = parsing(arg)
         if not args:
             print("** class name missing **")
             return
@@ -92,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
-        args = parse(arg)
+        args = parsing(arg)
         if not args:
             print("** class name missing **")
             return
@@ -113,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        args = parse(arg)
+        args = parsing(arg)
         if not args:
             print("** class name missing **")
             return
@@ -136,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, arg):
         """Usage: count <class> or <class>.count()
         Retrieve the number of instances of a given class."""
-        argl = parse(arg)
+        argl = parsing(arg)
         count = 0
         for obj in storage.all().values():
             if argl[0] == obj.__class__.__name__:
@@ -145,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
-        args = parse(arg)
+        args = parsing(arg)
         if args and args[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
@@ -160,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-        args = parse(arg)
+        args = parsing(arg)
         if not args:
             print("** class name missing **")
             return False
