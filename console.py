@@ -56,15 +56,13 @@ class HBNBCommand(cmd.Cmd):
         }
         dot_match = re.search(r"\.", input_arg)
         if dot_match is not None:
-            input_arg_list =
-            [
+            input_arg_list = [
                 input_arg[:dot_match.span()[0]],
                 input_arg[dot_match.span()[1]:]
             ]
             parentheses_match = re.search(r"\((.*?)\)", input_arg_list[1])
             if parentheses_match is not None:
-                command_parts =
-                [
+                command_parts = [
                     input_arg_list[1][:parentheses_match.span()[0]],
                     parentheses_match.group()[1:-1]
                 ]
