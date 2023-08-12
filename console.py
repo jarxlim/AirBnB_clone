@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import cmd
 import re
 from shlex import split
@@ -98,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             print(eval(class_name)().id)
-            new_instance.save()
+            storage.save()
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
