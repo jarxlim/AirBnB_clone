@@ -5,6 +5,7 @@ import uuid
 import models
 from datetime import datetime
 
+
 class BaseModel():
     """class base model in which other classes inherit from"""
     def __init__(self, *args, **kwargs):
@@ -19,13 +20,12 @@ class BaseModel():
         if len(kwargs) != 0:
             for k, v in kwargs.items():
                 if k in ['created_at', 'updated_at']:
-                    self.__dict__[k] = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+                    dd = '%Y-%m-%dT%H:%M:%S.%f'
+                    self.__dict__[k] = datetime.strptime(v, dd)
                 else:
                     self.__dict__[k] = v
         else:
             models.storage.new(self)
-    
-    
 
     def __str__(self):
         """string representation of attribute
@@ -33,7 +33,8 @@ class BaseModel():
         Returns:
             official string representation
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        dd = self.__class__.__name__
+        return "[{}] ({}) {}".format(dd, self.id, self.__dict__)
 
     def save(self):
         """update the current time
