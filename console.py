@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """Exit the program on EOF (Ctrl-D)"""
-        print()
+        quit()
         return True
 
     def do_quit(self, arg):
@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """Do nothing on empty line"""
-        pass
+        return False
 
     def do_create(self, arg):
         """Create a new instance of BaseModel, save it, and print the id"""
