@@ -54,15 +54,23 @@ class HBNBCommand(cmd.Cmd):
             "count": self.do_count,
             "update": self.do_update
         }
-        
         dot_match = re.search(r"\.", input_arg)
         if dot_match is not None:
-            input_arg_list = [input_arg[:dot_match.span()[0]], input_arg[dot_match.span()[1]:]]
+            input_arg_list =
+            [
+                input_arg[:dot_match.span()[0]],
+                input_arg[dot_match.span()[1]:]
+            ]
             parentheses_match = re.search(r"\((.*?)\)", input_arg_list[1])
             if parentheses_match is not None:
-                command_parts = [input_arg_list[1][:parentheses_match.span()[0]], parentheses_match.group()[1:-1]]
+                command_parts =
+                [
+                    input_arg_list[1][:parentheses_match.span()[0]],
+                    parentheses_match.group()[1:-1]
+                ]
                 if command_parts[0] in command_dict.keys():
-                    full_call = "{} {}".format(input_arg_list[0], command_parts[1])
+                    part1 = input_arg_list[0]
+                    full_call = "{} {}".format(part1, command_parts[1])
                     return command_dict[command_parts[0]](full_call)
         print("*** Unknown syntax: {}".format(input_arg))
         return False
@@ -73,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """Exit the program on EOF (Ctrl-D)"""
-        print("")  # Print a newline for better formatting
+        print("")
         return True
 
     def emptyline(self):
@@ -93,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(eval(class_name)().id)
             new_instance.save()
-        
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
@@ -209,6 +216,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
