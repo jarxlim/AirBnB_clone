@@ -73,13 +73,13 @@ class HBNBCommand(cmd.Cmd):
         print("*** Unknown syntax: {}".format(input_arg))
         return False
 
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
-        return True
-
     def do_EOF(self, arg):
         """Exit the program on EOF (Ctrl-D)"""
-        print("")
+        print()
+        return True
+
+    def do_quit(self, arg):
+        """Quit command to exit the program"""
         return True
 
     def emptyline(self):
